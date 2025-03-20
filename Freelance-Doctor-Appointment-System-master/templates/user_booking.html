@@ -1,0 +1,61 @@
+{%include 'user_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+		
+		<table class="table" style="width:500px;">
+			<h1>BOOKING</h1>
+
+			<!-- <tr>
+				<th>Reason</th>
+				<td><input type="text" name="reason" required="" class="form-control"></td>
+			</tr>
+			 -->
+			
+			<tr>
+				{% for i in data['sch'] %}
+				<td><a class="btn btn-outline-success" href="user_select_timing?date={{i['available_date']}}&id={{i['schedule_id']}}">{{i['available_date']}}</a></td>
+			{% endfor %}
+			</tr>
+		</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+
+
+<center>
+	
+	<table  class="table" style="width:500px">
+		<tr>
+			<th>Slno,</th>
+			<th>Appoinment</th>
+			<th>Date</th>
+			
+			
+		
+		</tr>
+		{%for row in data['bok']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['detail']}}</td>
+			<td>{{row['date']}}</td>
+			
+			
+			
+			<td><a class="btn btn-outline-danger" href="?action=delete&id={{row['booking_id']}}">delete</a></td>
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

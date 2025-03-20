@@ -1,0 +1,44 @@
+{%include 'admin_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+	
+		<table class="table" style="width:500px;">
+			<h1>Doctor</h1>
+			<tr>
+				<th>Doctor</th>
+				<td>
+					<select required="" class="form-control" name="doc">
+						{% for i in data['doc'] %}
+						<option value="{{i['doctor_id']}}">{{i['fname']}} {{i['lname']}}</option>
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Salary</th>
+				<td><input type="text" name="sal" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Month</th>
+				<td><input type="month" name="mon" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><input type="submit" name="pay" class="btn btn-success" value="PAY"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+
+<br><br><br>
+{%include 'footer.html'%}

@@ -1,0 +1,49 @@
+{%include 'user_header.html'%}
+<div style="margin-bottom: 1em; background:url('/static/assets/img/patient.jpeg') ; height: 300px; width: 100%; background-size: cover;" >
+	</div>
+<center>
+	
+	<table  class="table" style="width:500px">
+		<tr>
+			<th>Slno</th>
+			<th>Department</th>
+			<th>Doctor</th>
+			<th>Date</th>
+			<th>Appoinment Date</th>
+			<th>Reason</th>
+			<th>Status</th>
+			
+		
+		</tr>
+		{%for row in data['bok']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['department']}}</td>
+			<td>{{row['fname']}} {{row['lname']}}</td>
+			<td>{{row['adate']}}</td>
+
+
+			<td>{{row['atime']}}</td>
+			<td>{{row['reason']}}</td>
+			<td>{{row['b_st']}}</td>
+
+
+			{%if row['b_st']=="accept"%}
+			<td><a class="btn btn-outline-success" href="user_make_payment?id={{row['booking_id']}}&amt={{row['fees']}}">Make payment</a></td>
+			{%elif row['b_st']=="paid"%}
+			<td><a href="viewinvoice?id={{row['booking_id']}}" class="btn btn-info">Bill</a></td>
+			{%else%}
+			<td>{{row['b_st']}}</td>
+			
+			{%endif%}
+			
+			
+			
+			<td><a class="btn btn-outline-danger" href="?action=delete&id={{row['booking_id']}}">Cancel</a></td>
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

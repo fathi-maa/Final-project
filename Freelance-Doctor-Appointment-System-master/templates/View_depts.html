@@ -1,0 +1,40 @@
+{%include 'public_header.html'%}
+
+ <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Application</h2>
+          <p>Job for Freelance Doctors...</p>
+        </header>
+
+        <div class="row gy-4">
+          {% for i in data['dept'] %}
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-box blue">
+             
+              <h3>{{i['department']}}</h3>
+              <p>{{i['amount']}}</p>
+              <a href="reg?dept={{i['department_id']}}" class="read-more"><span>Apply</span> <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>
+
+         
+
+         
+
+       
+
+         
+
+        {% endfor %}
+
+      </div>
+
+    </section><!-- End Services Section -->
+
+
+  {%include 'footer.html'%}

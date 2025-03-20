@@ -1,0 +1,81 @@
+{%include 'admin_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+		{% if data['up'] %}
+		<br><br><br><br><br><br><br><br><br>
+		<table class="table" style="width:500px;">
+			<h1>Department</h1>
+			<tr>
+				<th>Department</th>
+				<td><input type="text" value="{{data['up'][0]['department']}}" name="fname" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td><textarea name="des" class="form-control" required="">{{data['up'][0]['description']}}</textarea></td>
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="update" value="UPDATE"></td>
+			</tr>
+		</table>
+
+		{% else %}
+		<table class="table" style="width:500px;">
+			<h1>Department</h1>
+			<tr>
+				<th>Department</th>
+				<td><input type="text" name="fname" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td><textarea name="des" class="form-control" required=""></textarea></td>
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="submit" value="Add"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+{% endif %}
+
+<center>
+	
+	<table  class="table" style="width:500px">
+		<tr>
+			<th>Slno,</th>
+			<th>Department</th>
+			<th>Description</th>
+			
+			
+		
+		</tr>
+		{%for row in data['tr']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['department']}}</td>
+			<td>{{row['description']}}</td>
+			
+			
+			
+			<td><a class="btn btn-outline-danger" href="?action=delete&id={{row['department_id']}}">delete</a></td>
+
+			<td><a class="btn btn-outline-danger" href="?action=update&id={{row['department_id']}}">Update</a></td>
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

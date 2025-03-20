@@ -1,0 +1,91 @@
+{%include 'user_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	
+{%if data['updated']%}
+	<form method="post">
+		
+		<table class="table" style="width:500px;">
+			<h1>Manage Profile</h1>
+			<!-- <tr>
+				<th>Department</th>
+				<td><select name="dept" required="" class="form-control">
+					<option>select---</option>
+					{%for row in data['dept']%}
+					<option value="{{row['department_id']}}">{{row['department']}}</option>
+					{%endfor%}
+				</select></td>
+			</tr> -->
+			<tr>
+				<th>First name</th>
+				<td><input type="text" name="fname" required="" value="{{data['updated'][0]['fname']}}" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Lastname</th>
+				<td><input type="text" name="lname" required="" value="{{data['updated'][0]['lname']}}" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Place</th>
+				<td><input type="text" name="place" required="" value="{{data['updated'][0]['place']}}" class="form-control"></td>
+
+			</tr>
+			<tr>
+				<th>Phone</th>
+				<td><input type="text" name="phone" maxlength="10" value="{{data['updated'][0]['phone']}}" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td><input type="email" name="email" required="" value="{{data['updated'][0]['email']}}" pattern=".+gmail\.com" class="form-control"></td>
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="update" value="Update"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+
+
+{%else%}
+
+<center>
+	<h1>My Profile </h1>
+	<table  class="table" style="width:300px">
+		{%for row in data['tr']%}
+		<tr>
+			
+			<th>NAME :</th>
+			<td>{{row['fname']}} {{row['lname']}}</td>
+		</tr>
+		<tr>
+			<th>PLACE</th>
+			<td>{{row['place']}}</td>
+		</tr>
+		<tr>
+			<th>PHONE</th>
+			<td>{{row['phone']}}</td>
+		</tr>
+		<tr>
+			<th>EMAIL</th>
+			<td>{{row['email']}}</td>
+		</tr>
+		<tr>
+			 <td colspan="2" align="center"><a href="?action=update&id={{row['user_id']}}" class="btn btn-outline-info">Update</a></td>
+
+		</tr>
+			
+			
+		{%endfor%}
+	</table>
+	{% endif %}
+</center>
+<br><br><br>
+</div></div></section>
+{%include 'footer.html'%}

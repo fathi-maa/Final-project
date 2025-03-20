@@ -1,0 +1,42 @@
+{%include 'admin_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+		
+		<table class="table" style="width:500px;">
+			<h1>Payment</h1>
+			<tr>
+				<th>Credit Card</th>
+				<td><input type="text" name="card" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Expiry Date</th>
+				<td><input type="month" name="exp" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>CVV</th>
+				<td><input type="text" maxlength="3" pattern="[0-9]{3}" name="cvv" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Amount</th>
+				<td><input type="text" readonly="" value="{{data['amt']}}"  name="amt" required="" class="form-control"></td>
+			</tr>
+			
+			
+			<tr>
+				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="submit" value="Add"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+{%include 'user_header.html'%}

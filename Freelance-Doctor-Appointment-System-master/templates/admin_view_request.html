@@ -1,0 +1,35 @@
+{%include 'admin_header.html'%}
+<div style="margin-bottom: 1em; background:url('/static/assets/img/values-1.png') ; height: 300px; width: 100%; background-size: cover;" >
+	</div>
+<center>
+	<h1>Requests added</h1>
+	<table  class="table" style="width:500px">
+		<tr>
+			<th>Slno,</th>
+			<th>DOCTOR</th>
+			<th>DATE</th>
+			<th>STATUS</th>
+			
+			
+		
+		</tr>
+		{%for row in data['tr']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			
+			<td>{{row['fname']}} {{row['lname']}}</td>
+			<td>{{row['date']}}</td>
+			
+			{%if row['status']=="pending"%}
+			<td><a class="btn btn-outline-success" href="?action=accept&id={{row['login_id']}}">accept</a></td>
+			<td><a class="btn btn-outline-danger" href="?action=reject&id={{row['login_id']}}">reject</a></td>
+			{%else%}
+			<td>{{row['status']}}</td>
+			{%endif%}
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

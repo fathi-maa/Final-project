@@ -1,0 +1,30 @@
+{%include 'admin_header.html'%}
+<div style="margin-bottom: 1em; background:url('/static/assets/img/patient.jpeg') ; height: 300px; width: 100%; background-size: cover;" >
+	</div>
+<center>
+	<h1>Patient added</h1>
+	<table  class="table" style="width:500px">
+		<tr>
+			<th>Slno</th>
+			<th>NAME</th>
+			<th>PLACE</th>
+			<th>PHONE</th>
+			<th>EMAIL</th>
+			
+		
+		</tr>
+		{%for row in data['tr']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['fname']}} {{row['lname']}}</td>
+			<td>{{row['place']}}</td>
+			<td>{{row['phone']}}</td>
+			<td>{{row['email']}}</td>
+			
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

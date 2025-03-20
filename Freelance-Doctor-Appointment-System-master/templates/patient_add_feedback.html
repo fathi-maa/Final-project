@@ -1,0 +1,51 @@
+{%include 'user_header.html'%}
+
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+		<h1>Feedback</h1>
+			<table class="table" style="width:500px;margin-top: 12rem;">
+		<tr>
+			<th>Feedback</th>
+			<td>
+				<textarea class="form-control" required="" name="feed"></textarea>
+			
+			</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2"><input type="submit" value="ADD" class="btn btn-success" name="submit"></td>
+		</tr>
+	</table>
+
+	</div>
+</div>
+</div></section>
+<center>
+
+	<table class="table" style="width: 500px;">
+		<tr>
+			<th>Sl.no</th>
+			<th>Feedback</th>
+			<th>Date</th>
+		</tr>
+		{% for i in data['feed'] %}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{i['feedback']}}</td>
+			<td>{{i['date']}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</form>
+</center>
+<center>
+
+	<br><br>
+	{%include 'footer.html'%}

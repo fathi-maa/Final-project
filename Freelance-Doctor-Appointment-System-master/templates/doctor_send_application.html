@@ -1,0 +1,68 @@
+{%include 'doctor_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+		
+		<table class="table" style="width:500px;">
+			<h1>Application</h1>
+			<tr>
+				<th>Date</th>
+				<td><input type="date" name="date" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Consult place</th>
+				<td><input type="text" name="place" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>consult time</th>
+				<td><input type="time" name="time" required="" class="form-control"></td>
+			</tr>
+			
+			
+			<tr>
+				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="submit" value="Add"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+
+
+<center>
+	
+	<table  class="table" style="width:500px">
+		<tr>
+			<th>Slno,</th>
+			<th>DATE</th>
+			<th>CONSULT PLACE</th>
+			<th>CONSULT TIME</th>
+			
+			
+		
+		</tr>
+		{%for row in data['tr']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['date']}}</td>
+			<td>{{row['consult_time']}}</td>
+			<td>{{row['consult_place']}}</td>
+			
+			
+			
+			<td><a class="btn btn-outline-danger" href="?action=delete&id={{row['application_id']}}">delete</a></td>
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

@@ -1,0 +1,51 @@
+{%include 'user_header.html'%}
+<div style="margin-bottom: 1em; background:url('/static/assets/img/patient.jpeg') ; height: 300px; width: 100%; background-size: cover;" >
+	</div>
+
+
+	<center>
+		<form method="post">
+			<table>
+				<tr>
+					<td><input type="text" placeholder="Search by department or location..." name="search_query"></td>
+					<td><input type="submit" class="btn btn-success" name="search" value="Search"></td>
+				</tr>
+			</table>
+		</form>
+	</center>
+	
+	
+
+
+<center>
+	<h1>Doctor added</h1>
+	<table  class="table" style="width:1000px">
+		<tr>
+			<th>SLNO</th>
+			<th>DEPARTMENT NAME</th>
+			<th>NAME</th>
+			<th>PLACE</th>
+			<th>CONSULTING PLACE</th>
+			<th>PHONE</th>
+			<th>EMAIL</th>
+			
+		
+		</tr>
+		{%for row in data['tr']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['department']}}</td>
+			<td>{{row['fname']}} {{row['lname']}}</td>
+			<td>{{row['place']}}</td>
+			<td>{{row['consulting_place']}}</td>
+			<td>{{row['phone']}}</td>
+			<td>{{row['email']}}</td>
+			<td><a href="user_make_appoinment?id={{row['doctor_id']}}" class="btn btn-outline-info">make appoinment</a></td>
+			
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

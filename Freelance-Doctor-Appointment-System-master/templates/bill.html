@@ -1,0 +1,127 @@
+<head>
+
+	<script>
+		function displayDateTime() {
+			var today = new Date();
+			var date = today.toDateString();
+			var time = today.toLocaleTimeString();
+			document.getElementById("datetime").innerHTML = date + " " + time;
+		}
+	</script>
+</head>
+		<body onload="printDiv(); displayDateTime();">
+    <div id="div_print">
+        <center>
+            <link rel="stylesheet" href="static/assets/css/style-starter.css">
+            <font style="font-family:times new roman">
+            <h1 style="color: #31a2b1;"><b>FREELANCE DOCTOR APPOINTMENT BOOKING<b></h1>
+                <p>
+                    Medick Private Limited ,
+                    near panampilly park,
+                    kadavanthara 682020 <br><br>
+                          <strong>Phone:</strong> +919675452454<br> 
+                          <strong>Email:</strong> freelance@appointment.in<br> 
+                        </p> 
+            <h1 style="font-size: 60px;">INVOICE</h1><br><br><br>
+            <!-- <h1>View Sales</h1> -->
+<!-- <table border=1 class="table table-secondary table-striped " style="width: 1000px;color: black;background:white;opacity: 0.85;"> -->
+    <div class="margin-top:10px">
+    <tr>
+      <th>Bill No:</th>
+      <td><span id="bill-number"></span></td>
+    </tr><br>
+  
+    <tr>
+        <th>PATIENT NAME:</th>
+        <TD>{{data['pay'][0]['fname']}}{{data['pay'][0]['lname']}}</TD><br>
+    </tr>
+    <tr>
+        <th>PHONE NUMBER:</th>
+        <TD>{{data['pay'][0]['phone']}}</TD>
+    </tr><br>
+    
+    <tr>
+      <th> BILL DATE : {{data['today']}}</th>
+      <TD><span id="datetime"></span></TD>
+    </tr> 
+<!-- </table> -->
+</div>
+    <table border=1 class="table table-secondary table-striped " style="width: 1000px;color: black;background:white;opacity: 0.85;">
+
+
+      <script>
+        var billNumber = Math.floor(Math.random() * 1000000) + 1;
+        document.getElementById("bill-number").innerHTML = billNumber;
+      </script>
+
+
+<script> 
+    function printDiv() { 
+      var divContents = document.getElementById("div_print").innerHTML; 
+      var a = window.open('', '', 'height=500, width=500'); 
+      a.document.write(divContents); 
+      a.document.close(); 
+      a.print(); 
+    } 
+  </script>
+        <TH>DOCTOR</TH>
+        <th>DEPARTMENT</th>
+		<TH>PAYMENT DATE</TH>
+		
+		
+    <th>PAYMENT STATUS</th>
+		
+                
+                
+            </tr>
+            
+        
+
+		{% for row in data['pay']%}
+	<tr>
+		<td>{{row['fname']}} {{row['lname']}}</td>
+        <td>{{row['department']}}</td>
+		<td>{{row['p_date']}}</td>
+		<!-- <td>{{row['b_st']}}</td> -->
+     <td>Paid</td>
+		
+   
+            </tr>
+            {% endfor %}
+            <td colspan="4" align="right">Total Price:{{data['pay'][0]['amount']}}</td>
+    </table></font></center></div>
+
+<script> 
+
+
+    function printDiv() { 
+      var divContents = document.getElementById("div_print").innerHTML; 
+      var a = window.open('', '', 'height=500, width=500'); 
+      a.document.write(divContents); 
+      a.document.close(); 
+      a.print(); 
+    } 
+
+    document.querySelector("body")
+
+    var body = document.getElementsByTagName("body")[0];
+
+body.addEventListener("load", init(), false);
+
+function init() {
+       print()
+};
+
+
+  </script>
+
+  <p style="padding-left: 1000px;color: black;font-family:times new roman"><b>Authorised Signature</b></p>
+            <img style="padding-left: 1000px;" src="/static/assets/img/sign.png" height="100" width="100">
+
+
+
+<style>
+    body{
+        background: bl;
+    }
+</style>

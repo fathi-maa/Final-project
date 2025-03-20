@@ -1,0 +1,42 @@
+{%include 'doctor_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="height:400px ;">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+<center>
+	<form method="post">
+		<h1>Messaage</h1>
+		<table class="table" style="width:500px">
+			<tr>
+				<th>Message</th>
+				<td><input type="text" name="message" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><input type="submit" name="submit" class="btn btn-outline-info" value="Send"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+</div></div></section>
+<center>
+	<h1>message box</h1>
+	<table class="table" style="width: 500px;">
+
+		{%for row in data['msg']%}
+		{% if row['sender_id']==data['psycho'] %}
+		<tr>
+			<td align="right">{{row['chat']}}</td>
+			
+		</tr>
+		{%else%}
+		<tr>
+			<td align="left">{{row['chat']}}</td>
+			
+		</tr>
+		{%endif%}
+		{%endfor%}
+	</table>
+</center>
+{%include 'footer.html'%}

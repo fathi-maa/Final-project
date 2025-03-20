@@ -1,0 +1,61 @@
+{% include 'user_header.html' %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero d-flex align-items-center">
+    <div class="container">
+        <div class="row">
+            <center>
+                <form method="post">
+                    <table class="table" style="width:500px;">
+                        <h1>Appointment</h1>
+                        <tr>
+                            {% for i in data['sch'] %}
+                            <td>
+                                <a class="btn btn-outline-success date-btn" 
+                                   href="user_select_timing?date={{ i['available_date'] }}&id={{ i['schedule_id'] }}" 
+                                   data-date="{{ i['available_date'] }}">
+                                    {{ i['available_date'] }}
+                                </a>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </form>
+            </center>
+        </div>
+    </div>
+</section>
+
+<center>
+    <table class="table" style="width:500px">
+        <tr>
+            <th>Slno.</th>
+            <th>Appointment</th>
+            <th>Date</th>
+        </tr>
+        {% for row in data['bok'] %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row['detail'] }}</td>
+            <td>{{ row['date'] }}</td>
+            <td><a class="btn btn-outline-danger" href="?action=delete&id={{ row['booking_id'] }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</center>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll(".date-btn").forEach(function(button) {
+            let btnDate = button.getAttribute("data-date");
+            if (btnDate < today) {
+                button.classList.remove("btn-outline-success");
+                button.classList.add("btn-danger");
+                button.style.pointerEvents = "none";
+                
+            }
+        });
+    });
+</script>
+
+{% include 'footer.html' %}

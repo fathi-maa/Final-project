@@ -1,0 +1,79 @@
+{% include 'admin_header.html'%}
+
+
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="height:400px">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+  <center>
+  <h1>SEARCH </h1>
+  <form method="post">
+    <table style="color: black;width: 100px">
+
+  
+       <td style="color: black;"><input type="date" name="daily" > DAILY </td>
+        <td  style="color: black"> <input type="month" name="monthly"> MONTHLY </td>
+        <td  style="color: black"> <input type="text" name="doctor" placeholder="Search by Doctor"> DOCTOR </td>
+         <td  style="color: black"> <input type="text" name="user" placeholder="Search by Patient"> PATIENT </td>
+
+     <tr>
+       <td align="center" colspan="5"><input type="submit" name="sale" class="btn btn-success" value="SEARCH"></td>
+      </tr>
+    
+
+      </tr>
+    </table>
+  </form>
+
+</center>
+
+</div></div></section>
+<center>
+	<h1>Report</h1>
+	  <!-- <h2><a class="btn btn-success" href="admin_salesreport">print</a></h2> -->
+	<form>
+
+		<table class="table" style="width: 500px">
+			<tr>
+				<th>sino</th>
+				<th>Patient</th>
+				<th>Doctor</th>
+				<th>Department</th>
+				<th>Treatment</th>
+				<th>Reason</th>
+				<th>Fees</th>
+				<th>Consulting Time</th>
+				<th>Consulting Place</th>
+				<th>Date</th>
+				<!-- <th>Status</th> -->
+				
+				
+			</tr>
+			{% for row in data['report']%}
+    	<tr>
+    		<td>{{loop.index}}</td>
+    		<td>{{row['USER']}}</td>
+    		<td>{{row['doctor']}}</td>
+    		<td>{{row['department'] }}</td>
+    		<td>{{row['treatment']}}</td>
+    		<td>{{row['reason']}}</td>
+    		<td>{{row['fees']}}</td>
+    		<td>{{row['consulting_time'] }}</td>
+    		<td>{{row['consulting_place']}}</td>
+    		
+    		<td>{{row['date'] }}</td>
+    		<!-- <td>{{row['order_status']}}</td> -->
+    		
+    		
+   
+    		
+    	</tr>
+    	{% endfor %}
+   
+		</table>
+	</form>
+</center>
+{% include 'footer.html'%}

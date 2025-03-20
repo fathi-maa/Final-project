@@ -1,0 +1,67 @@
+{%include 'admin_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+	
+		<table class="table" style="width:500px;">
+			<h1>Salary</h1>
+			<tr>
+				<th>Department</th>
+				<td>
+					<select  name="dept" required="" class="form-control">
+						{% for i in data['sals'] %}
+						<option value="{{i['department_id']}}">{{i['department']}}</option>
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><input type="submit" name="next" class="btn btn-success" value="NEXT"></td>
+			</tr>
+		</table>
+
+
+		<table  class="table" style="width:900px">
+		<tr>
+			<th>Slno</th>
+			<th>Department</th>
+			<th>Doctor</th>
+			<th>Email</th>
+			<th>Salary</th>
+			<th>Date</th>
+			<th>Month</th>
+
+			
+		
+		</tr>
+		{%for row in data['sal']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['department']}}</td>
+			<td>{{row['fname']}} {{row['lname']}}</td>
+			
+			<td>{{row['email']}}</td>
+			<td>{{row['amount']}}</td>
+			
+			<td>{{row['date']}}</td>
+			<td>{{row['month']}}</td>
+			
+	
+		</tr>
+		{%endfor%}
+	</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+
+<br><br><br>
+{%include 'footer.html'%}

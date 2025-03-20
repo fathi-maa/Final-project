@@ -1,0 +1,99 @@
+{%include 'doctor_header.html'%}
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+
+
+<center>
+	<form method="post">
+		
+		
+
+
+		<script>
+
+  function opdt(){
+      if(document.getElementById('store').value == ""){
+
+          document.getElementById('store').value=document.getElementById('date-picker').value
+
+      }else{
+          
+          document.getElementById('store').value=document.getElementById('store').value+","+document.getElementById('date-picker').value
+      }
+   
+  }
+
+</script>
+                <form method="post">
+                
+                    <center>
+                        <h2 style="color: black">Schedule</h2>
+                        <table class="table" style="width: 500px;color: black">
+                          <tr>
+                        
+                          </tr>
+                        </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td><input type="date"  min="{{data['today']}}" required class="form-control" id="date-picker" oninput="opdt()">
+                                <input type="text" name="date" id="store" required class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <th>Start Time</th>
+                                <td><input type="time" name="st" class="form-control" required></td>
+                            </tr>
+                            <tr>
+                                <th>End Time</th>
+                                <td><input type="time" name="et" class="form-control" required></td>
+                            </tr>
+                            <tr>
+                                <th>Interval</th>
+                                <td><input type="number" min="0" name="inte" class="form-control" required></td>
+                            </tr>
+                             <tr>
+                                <th>Fee</th>
+                                <td><input type="number" min="0" name="fee" class="form-control" required></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center"><input type="submit" name="submit" value="SCHEDULE" class="btn btn-success"></td>
+                            </tr>
+                        </table>
+                    </center>
+                </form>
+
+
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+
+
+<center>
+	
+	  <center>
+                        <table class="table" style="width: 500px;color: black">
+                            <tr>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Interval</th>
+                              
+                            </tr>
+                            {% for i in data['sch'] %}
+                            <tr>
+                            	<td>{{i['available_date']}}</td>
+                            	<td>{{i['starting_time']}}</td>
+                            	<td>{{i['ending_time']}}</td>
+                            	<td>{{i['interval']}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </center>
+</center>
+<br><br><br>
+{%include 'footer.html'%}

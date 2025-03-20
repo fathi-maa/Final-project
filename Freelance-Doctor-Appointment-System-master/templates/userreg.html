@@ -1,0 +1,49 @@
+{%include 'public_header.html'%}
+ <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+<center>
+	<form method="post">
+		
+		<table class="table" style="width:500px;" style="padding-top: 20px;">
+			<h1>Register Here</h1><br>
+			<tr>
+				<th>First name</th>
+				<td><input type="text" name="fname" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Lastname</th>
+				<td><input type="text" name="lname" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Place</th>
+				<td><input type="text" name="place" required="" class="form-control"></td>
+
+			</tr>
+			<tr>
+				<th>Phone</th>
+				<td><input type="text" name="phone" maxlength="10" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td><input type="email" name="email" required="" pattern=".+gmail\.com" class="form-control"></td>
+			</tr>
+			
+			<tr>
+				<th>Username</th>
+				<td><input type="text" name="username" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td><input type="password" name="password" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="submit" value="Register"></td>
+			</tr>
+		</table>
+	</form>
+</center>
+</div></div></section>
+{%include 'footer.html'%}

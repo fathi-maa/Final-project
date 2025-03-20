@@ -1,0 +1,45 @@
+{%include 'doctor_header.html'%}
+<div style="margin-bottom: 1em; background:url('/static/assets/img/patient.jpeg') ; height: 300px; width: 100%; background-size: cover;" >
+	</div>
+<center>
+	<h1>Bookings added</h1>
+	<table  class="table" style="width:900px">
+		<tr>
+			<th>Slno</th>
+			<th>NAME</th>
+			<th>PLACE</th>
+			<th>PHONE</th>
+			<th>EMAIL</th>
+			
+			<th>Appoinment Date</th>
+			<th>Reason</th>
+			<th>Date</th>
+			<th>Status</th>
+			
+		
+		</tr>
+		{%for row in data['tr']%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td>{{row['fname']}} {{row['lname']}}</td>
+			<td>{{row['place']}}</td>
+			<td>{{row['phone']}}</td>
+			<td>{{row['email']}}</td>
+			
+            <td>{{row['atime']}}</td>
+			<td>{{row['reason']}}</td>
+			<td>{{row['adate']}}</td>
+			{%if row['st']=="pending"%}
+			<td><a class="btn btn-outline-success" href="?action=accept&id={{row['booking_id']}}">accept</a></td>
+			<td><a class="btn btn-outline-danger" href="?action=reject&id={{row['booking_id']}}">reject</a></td>
+			{%else%}
+			<td><a class="btn btn-outline-info" href="doctor_add_treatment?id={{row['booking_id']}}">Add Treatment</a></td>
+			<td>{{row['st']}}</td>
+			{%endif%}
+	
+		</tr>
+		{%endfor%}
+	</table>
+</center>
+<br><br><br>
+{%include 'footer.html'%}
