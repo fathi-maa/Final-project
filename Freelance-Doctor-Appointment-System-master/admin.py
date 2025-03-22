@@ -67,13 +67,13 @@ def admin_view_request():
 	if action=="accept":
 		q="update request set status='accept' where request_id='%s'"%(id)
 		update(q)
-		flash('updated successfully')
+		flash('Doctor added successfully')
 		return redirect(url_for('admin.admin_view_request'))
 
 	if action=="reject":
 		q="update login set status='reject'   where request_id='%s'"%(id)
 		update(q)
-		flash('updated successfully')
+		flash('Doctor rejected successfully')
 		return redirect(url_for('admin.admin_view_request'))
 
 	return render_template('admin_view_request.html',data=data)

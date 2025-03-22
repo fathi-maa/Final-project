@@ -175,7 +175,14 @@ def doctor_message():
 	return render_template("doctor_message.html",data=data)
 
 
+@doctor.route('/doctor_view_feedback',methods=['get','post'])
+def admin_view_feedback():
+	data={}
+	q="SELECT * FROM feedback inner join user using(user_id)  "
+	res=select(q)
+	data['tr']=res
 
+	return render_template('doctor_view_feedback.html',data=data)
 
 
 @doctor.route('/doctor_schedule',methods=['get','post'])
@@ -223,3 +230,4 @@ def doctor_schedule():
 				insert(q)
 				# return HttpResponse("<script>alert('Added Successfully....!!');window.location='/doctor_schedule_time';</script>")
 	return render_template("doctor_schedule.html",data=data)
+
