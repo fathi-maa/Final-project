@@ -208,6 +208,108 @@ def user_view_booking():
 	return render_template('user_view_booking.html',data=data)
 
 
+
+# from flask import Flask, render_template, request, jsonify, session, flash, redirect, url_for
+# import razorpay
+# from datetime import datetime
+
+# # Razorpay API Keys
+# razorpay_client = razorpay.Client(auth=("rzp_test_IssvYtF0DRUVhs", "mvHsLWCvj6WvVQMrq9VrFJOr"))
+# @user.route('/user_view_booking', methods=['GET', 'POST'])
+# def user_view_booking():
+#     data = {}
+
+#     # Check if user is logged in
+#     if 'uid' not in session:
+#         flash("Please log in first.")
+#         return redirect(url_for('user.login'))  # Redirect to login page
+
+#     # Securely fetch bookings with fees
+#     q = """SELECT booking.*, schedule.fees, booking.status AS b_st 
+#            FROM booking 
+#            INNER JOIN schedule USING (schedule_id) 
+#            INNER JOIN doctor USING (doctor_id) 
+#            INNER JOIN department ON department.department_id = doctor.dept_id 
+#            WHERE user_id = '%s'""" % session['uid']
+    
+#     res = select(q)
+#     data['bok'] = res
+
+#     # Handle delete action
+#     if 'action' in request.args and request.args.get('action') == "delete":
+#         booking_id = request.args.get('id')
+
+#         if booking_id:
+#             delete("DELETE FROM booking WHERE booking_id = '%s'" % booking_id)
+#             flash("Refunded your amount!")
+#             return redirect(url_for('user.user_view_booking'))  # Redirect to same page
+
+#     return render_template('user_view_booking.html', data=data)
+
+# @user.route('/create_order', methods=['GET'])
+# def create_order():
+#     booking_id = request.args.get('id')
+
+#     # Secure query to fetch fees
+#     q = """SELECT s.fees FROM schedule s 
+#            INNER JOIN booking b ON s.schedule_id = b.schedule_id 
+#            WHERE b.booking_id = %s"""
+#     result = select(q, (booking_id,))
+
+#     if not result:
+#         return jsonify({"error": "Invalid booking ID"}), 400
+
+#     amount = result[0]['fees']
+#     if not amount or int(amount) <= 0:
+#         return jsonify({"error": "Invalid amount"}), 400
+
+#     amount_in_paise = int(amount) * 100  # Convert to paise
+
+#     # Create Razorpay order
+#     try:
+#         order_data = {
+#             "amount": amount_in_paise,
+#             "currency": "INR",
+#             "payment_capture": 1
+#         }
+#         order = razorpay_client.order.create(order_data)
+#         return jsonify({"order_id": order['id'], "amount": amount})
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+
+# @user.route('/update_payment_status', methods=['GET'])
+# def update_payment_status():
+#     booking_id = request.args.get('id')
+
+#     # Secure query to get amount
+#     q = """SELECT s.fees FROM schedule s 
+#            INNER JOIN booking b ON s.schedule_id = b.schedule_id 
+#            WHERE b.booking_id = %s"""
+#     result = select(q, (booking_id,))
+
+#     if not result:
+#         return jsonify({"error": "Invalid booking ID"}), 400
+
+#     amount = result[0]['fees']
+#     today = datetime.today().strftime('%Y-%m-%d')
+
+#     # Check if payment already exists
+#     existing_payment = select("SELECT * FROM payment WHERE booking_id = %s", (booking_id,))
+#     if existing_payment:
+#         flash("Payment already completed!")
+#         return redirect(url_for('user.user_view_booking'))
+
+#     # Insert payment securely
+#     insert("INSERT INTO payment (payment_id, booking_id, date, amount) VALUES (NULL, %s, %s, %s)",
+#            (booking_id, today, amount))
+
+#     # Update booking status
+#     update("UPDATE booking SET status = 'paid' WHERE booking_id = %s", (booking_id,))
+
+#     flash("Payment successful!")
+#     return redirect(url_for('user.user_view_booking'))
+
+
 @user.route('/user_make_payment',methods=['get','post'])
 def user_make_payment():
 	data={}
@@ -233,15 +335,48 @@ def user_make_payment():
 
 @user.route('/viewinvoice')
 def viewinvoice():
-    data={}
-    from datetime import date,datetime 
-    today=date.today()
-    data['today']=today
-    omid=request.args['id']
-    q="SELECT *,payment.date as p_date FROM booking INNER JOIN payment USING (booking_id) INNER JOIN `schedule` USING(schedule_id) INNER JOIN doctor USING(doctor_id) INNER JOIN department ON doctor.dept_id=department.department_id WHERE user_id='%s' and booking_id='%s'"%(session['uid'],omid)
+    data = {}
+    from datetime import date
+    today = date.today()
+    data['today'] = today
+
+    omid = request.args.get('id')  # Use `.get()` to avoid KeyError
+    uid = session.get('uid')  # Use `.get()` to avoid KeyError if session is missing
+
+    if not omid or not uid:
+        flash("Invalid request or session expired!", "danger")
+        return redirect(url_for("user.dashboard"))  # Redirect to a safe page
+
+    # Fetch invoice details
+    q = """SELECT *, payment.date as p_date 
+           FROM booking 
+           INNER JOIN payment USING (booking_id) 
+           INNER JOIN schedule USING (schedule_id) 
+           INNER JOIN doctor USING (doctor_id) 
+           INNER JOIN department ON doctor.dept_id = department.department_id 
+           WHERE user_id='%s' AND booking_id='%s'""" % (uid, omid)
+    
     print(q)
-    data['pay']=select(q)
-    return render_template("bill.html",data=data)
+    data['pay'] = select(q)
+
+    if not data['pay']:  # Handle empty results
+        flash("No invoice found!", "warning")
+        return redirect(url_for("user.dashboard"))
+
+    return render_template("bill.html", data=data)
+
+
+# @user.route('/viewinvoice')
+# def viewinvoice():
+#     data={}
+#     from datetime import date,datetime 
+#     today=date.today()
+#     data['today']=today
+#     omid=request.args['id']
+#     q="SELECT *,payment.date as p_date FROM booking INNER JOIN payment USING (booking_id) INNER JOIN `schedule` USING(schedule_id) INNER JOIN doctor USING(doctor_id) INNER JOIN department ON doctor.dept_id=department.department_id WHERE user_id='%s' and booking_id='%s'"%(session['uid'],omid)
+#     print(q)
+#     data['pay']=select(q)
+#     return render_template("bill.html",data=data)
 
 
 

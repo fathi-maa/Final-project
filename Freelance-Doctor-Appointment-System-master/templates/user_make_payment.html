@@ -1,42 +1,72 @@
-{%include 'user_header.html'%}
-<!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero d-flex align-items-center">
+{% include 'user_header.html' %}
 
-    <div class="container">
-      <div class="row">
-        <!-- <div class="col-lg-6 d-flex flex-column justify-content-center"> -->
+<!-- ======= Payment Section ======= -->
+<section id="payment" class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: #eef5f9;">
 
+  <div class="container d-flex justify-content-center">
+    <div class="payment-box bg-white shadow-lg p-4 rounded" style="max-width: 450px; width: 100%; border-radius: 12px;">
+      
+      <!-- Razorpay-style header -->
+      <div class="text-center mb-4">
+        <img src="https://razorpay.com/favicon.png" alt="Payment" width="50">
+        <h3 class="mt-2" style="color: #2c3e50; font-weight: bold;">Secure Payment</h3>
+      </div>
+      
+      <form method="post">
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Credit Card</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+            <input type="text" name="card" id="cardNumber" required class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">
+          </div>
+        </div>
 
-<center>
-	<form method="post">
-		
-		<table class="table" style="width:500px;">
-			<h1>Payment</h1>
-			<tr>
-				<th>Credit Card</th>
-				<td><input type="text" name="card" required="" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>Expiry Date</th>
-				<td><input type="month" name="exp" required="" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>CVV</th>
-				<td><input type="text" maxlength="3" pattern="[0-9]{3}" name="cvv" required="" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>Amount</th>
-				<td><input type="text" readonly="" value="{{data['amt']}}"  name="amt" required="" class="form-control"></td>
-			</tr>
-			
-			
-			<tr>
-				<td align="center" colspan="2"><input type="submit" class="btn btn-outline-success" name="submit" value="Add"></td>
-			</tr>
-		</table>
-	</form>
-</center>
-</div>
-</div>
-</div></section>
-{%include 'user_header.html'%}
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Expiry Date</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+              <input type="month" name="exp" required class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold">CVV</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="text" name="cvv" required maxlength="3" pattern="[0-9]{3}" class="form-control" placeholder="123">
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-bold">Amount</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-rupee-sign"></i></span>
+            <input type="text" name="amt" readonly value="{{ data['amt'] }}" class="form-control bg-light">
+          </div>
+        </div>
+
+        <button type="submit" name="submit" value="Add" class="btn btn-primary w-100 shadow-sm" style="background-color: #528FF0; border: none; font-size: 16px; transition: 0.3s;">
+          Pay Now <i class="fas fa-arrow-right"></i>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+</section>
+
+<!-- FontAwesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Auto-format card number -->
+<script>
+  document.getElementById('cardNumber').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(\d{4})/g, '$1-').trim();
+    e.target.value = value.slice(0, 19);
+  });
+</script>
+
+{% include 'footer.html' %}
