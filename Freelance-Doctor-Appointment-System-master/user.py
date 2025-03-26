@@ -70,9 +70,6 @@ def user_view_doctor():
 
     return render_template('user_view_doctor.html', data=data)
 
-
-
-
 @user.route('/user_select_timing',methods=['get','post'])
 def user_select_timing():
 	from datetime import date,datetime,timedelta
@@ -111,8 +108,7 @@ def user_select_timing():
 				break
 		data['s']=s
 		print(s)
-		q = "SELECT atime FROM booking WHERE adate='%s' AND status='accept'" % (date)
-
+		q = "SELECT atime FROM booking WHERE adate='%s'" % (date)
 		booked_slots = [row['atime'] for row in select(q)]
 		data['booked'] = booked_slots  # Store booked slots in data	
 
@@ -126,23 +122,100 @@ def user_select_timing():
 		if res:
 			flash("Please Choose Another Time")
 		else:
-			q="insert into booking values(null,'%s','%s','%s','%s','%s','%s')"%(id,session['uid'],date,time,reason,'pending')
+			q="insert into booking values(null,'%s','%s','%s','%s','%s','%s')"%(id,session['uid'],date,time,reason,'booked')
 			insert(q)
 			print(q)
-			flash("Appointment request has successfully send.....!!!")
+			flash("Booked Successfully.....!!!")
 			return redirect(url_for('user.user_view_booking'))
 	return render_template('user_select_timing.html',data=data)
 
-@user.route('/user_view_treatment',methods=['get','post'])
+# @user.route('/user_select_timing',methods=['get','post'])
+# def user_select_timing():
+# 	from datetime import date,datetime,timedelta
+
+# 	data={}
+# 	uid=session['uid']
+
+# 	id=request.args['id']
+# 	date=request.args['date']
+# 	data['date']=date
+
+
+# 	q="SELECT * FROM `schedule` where schedule_id='%s'"%(id)
+# 	r=select(q)
+# 	if r:
+# 		print(q)
+# 		data['con']=r
+
+
+# 		x = r[0]['starting_time']
+# 		y = r[0]['ending_time']
+# 		ttt=r[0]['interval']
+# 		ttime=int(ttt)
+# 		hour_and_minute=x
+# 		date_time_obj = datetime.strptime(x, '%H:%M')
+# 		s=[]
+# 		while hour_and_minute<y:
+# 			if hour_and_minute<y:
+# 				date_time_obj += timedelta(minutes=ttime)
+# 				hour_and_minute = date_time_obj.strftime("%H:%M")
+# 				print(hour_and_minute)
+
+# 				s.append(hour_and_minute)
+				
+# 			else:
+# 				break
+# 		data['s']=s
+# 		print(s)
+# 		q = "SELECT atime FROM booking WHERE adate='%s' AND status='accept'" % (date)
+
+# 		booked_slots = [row['atime'] for row in select(q)]
+# 		data['booked'] = booked_slots  # Store booked slots in data	
+
+
+# 	if 'time' in request.form:
+# 		date=request.form['date']
+# 		reason=request.form['reason']
+# 		time=request.form['time']
+# 		q="select * from booking where adate='%s' and atime='%s'"%(date,time)
+# 		res=select(q)
+# 		if res:
+# 			flash("Please Choose Another Time")
+# 		else:
+# 			q="insert into booking values(null,'%s','%s','%s','%s','%s','%s')"%(id,session['uid'],date,time,reason,'booked')
+# 			insert(q)
+# 			print(q)
+# 			flash("Appointment request has successfully send.....!!!")
+# 			return redirect(url_for('user.user_view_booking'))
+# 	return render_template('user_select_timing.html',data=data)
+
+# @user.route('/user_view_treatment',methods=['get','post'])
+# def user_view_treatment():
+# 	data={}
+# 	uid=session['uid']
+# 	q="SELECT * FROM treatment INNER JOIN booking USING(booking_id)  INNER JOIN `schedule` USING(schedule_id) INNER JOIN DOCTOR USING(doctor_id) inner join login using(login_id) where user_id='%s'"%(uid) 
+# 	res=select(q)
+# 	data['tr']=res
+
+# 	return render_template('user_view_treatment.html',data=data)
+@user.route('/user_view_treatment', methods=['get', 'post'])
 def user_view_treatment():
-	data={}
-	uid=session['uid']
-	q="SELECT * FROM treatment INNER JOIN booking USING(booking_id)  INNER JOIN `schedule` USING(schedule_id) INNER JOIN DOCTOR USING(doctor_id) inner join login using(login_id) where user_id='%s'"%(uid) 
-	res=select(q)
-	data['tr']=res
+    data = {}
+    uid = session['uid']
 
-	return render_template('user_view_treatment.html',data=data)
+    # Fetch treatments with booking details, including status (b_st)
+    q = """SELECT treatment.*, booking.*, booking.status AS b_st, schedule.*, doctor.*, login.* 
+           FROM treatment 
+           INNER JOIN booking USING(booking_id)  
+           INNER JOIN schedule USING(schedule_id) 
+           INNER JOIN doctor USING(doctor_id) 
+           INNER JOIN login USING(login_id) 
+           WHERE user_id='%s'""" % (uid)
+    
+    res = select(q)
+    data['tr'] = res
 
+    return render_template('user_view_treatment.html', data=data)
 
 
 @user.route('/user_make_appoinment',methods=['get','post'])
@@ -202,10 +275,34 @@ def user_view_booking():
 	if action=="delete":
 		q="delete from booking where booking_id='%s'"%(id)
 		delete(q)
-		flash("refunded your amount..!")
+		flash("Appointment get cancelled successfully")
 		return redirect(url_for('user.user_view_doctor'))
 
 	return render_template('user_view_booking.html',data=data)
+
+# @user.route('/user_view_booking',methods=['get','post'])
+# def user_view_booking():
+# 	data={}
+# 	q="SELECT *,booking.status AS b_st FROM booking INNER JOIN SCHEDULE USING (schedule_id) INNER JOIN doctor USING (doctor_id) INNER JOIN department ON department.department_id=doctor.dept_id WHERE user_id='%s'"%(session['uid'])
+# 	print(q)
+# 	res=select(q)
+# 	print(res)
+# 	data['bok']=res
+
+# 	if 'action' in request.args:
+# 		action=request.args['action']
+# 		id=request.args['id']
+
+# 	else:
+# 		action=None
+
+# 	if action=="delete":
+# 		q="delete from booking where booking_id='%s'"%(id)
+# 		delete(q)
+# 		flash("refunded your amount..!")
+# 		return redirect(url_for('user.user_view_doctor'))
+
+# 	return render_template('user_view_booking.html',data=data)
 
 
 

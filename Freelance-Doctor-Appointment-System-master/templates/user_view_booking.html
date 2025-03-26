@@ -11,11 +11,30 @@
 			<th>Date</th>
 			<th>Appoinment Date</th>
 			<th>Reason</th>
-			<th>Status</th>
+			
 			
 		
 		</tr>
-		{%for row in data['bok']%}
+			{% for row in data['bok'] %}
+			<tr>
+    			<td>{{ loop.index }}</td>
+    			<td>{{ row['department'] }}</td>
+    			<td>{{ row['fname'] }} {{ row['lname'] }}</td>
+    			<td>{{ row['adate'] }}</td>
+    			<td>{{ row['atime'] }}</td>
+    			<td>{{ row['reason'] }}</td>
+
+    			<td>
+        			{% if row['status'] == 'treated' %}
+            			<button class="btn btn-outline-secondary" disabled>Cancelled</button>
+        			{% else %}
+            			<a class="btn btn-outline-danger" href="?action=delete&id={{ row['booking_id'] }}">Cancel</a>
+        			{% endif %}
+    			</td>
+			</tr>
+			{% endfor %}
+
+		<!-- {%for row in data['bok']%}
 		<tr>
 			<td>{{loop.index}}</td>
 			<td>{{row['department']}}</td>
@@ -25,7 +44,7 @@
 
 			<td>{{row['atime']}}</td>
 			<td>{{row['reason']}}</td>
-			<td>{{row['b_st']}}</td>
+			
 
 
 			{%if row['b_st']=="accept"%}
@@ -35,14 +54,14 @@
 			{%else%}
 			<td>{{row['b_st']}}</td>
 			
-			{%endif%}
+			{%endif%} 
 			
 			
 			
 			<td><a class="btn btn-outline-danger" href="?action=delete&id={{row['booking_id']}}">Cancel</a></td>
 	
 		</tr>
-		{%endfor%}
+		{%endfor%} -->
 	</table>
 </center>
 <br><br><br>

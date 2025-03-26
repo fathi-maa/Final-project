@@ -27,7 +27,7 @@
             <label class="form-label fw-bold">Expiry Date</label>
             <div class="input-group">
               <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-              <input type="month" name="exp" required class="form-control">
+              <input type="month" name="exp" id="expiryDate" required class="form-control">
             </div>
           </div>
           <div class="col-md-6">
@@ -60,12 +60,21 @@
 <!-- FontAwesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-<!-- Auto-format card number -->
+<!-- Auto-format card number and validate expiry date -->
 <script>
   document.getElementById('cardNumber').addEventListener('input', function (e) {
     let value = e.target.value.replace(/\D/g, '');
     value = value.replace(/(\d{4})/g, '$1-').trim();
     e.target.value = value.slice(0, 19);
+  });
+
+  document.getElementById('expiryDate').addEventListener('input', function (e) {
+    let today = new Date();
+    let inputDate = new Date(e.target.value + "-01");
+    if (inputDate < new Date(today.getFullYear(), today.getMonth(), 1)) {
+      alert("Expiry date cannot be in the past.");
+      e.target.value = "";
+    }
   });
 </script>
 

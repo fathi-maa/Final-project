@@ -6,7 +6,6 @@ doctor=Blueprint('doctor',__name__)
 def doctor_home():
 	return render_template('doctor_home.html')
 
-
 @doctor.route('/doctor_view_booking',methods=['get','post'])
 def doctor_view_booking():
 	data={}
@@ -24,7 +23,7 @@ def doctor_view_booking():
 	if action=="accept":
 		q="update booking set status='accept' where booking_id='%s'"%(id)
 		update(q)
-		flash('Appointment confirmed....!!')
+		flash('updated successfully')
 		return redirect(url_for('doctor.doctor_view_booking'))
 
 	if action=="reject":
@@ -34,6 +33,70 @@ def doctor_view_booking():
 		return redirect(url_for('doctor.doctor_view_booking'))
 
 	return render_template('doctor_view_booking.html',data=data)
+
+# @doctor.route('/doctor_view_booking',methods=['get','post'])
+# def doctor_view_booking():
+# 	data={}
+# 	q="select *,booking.status as st from booking inner join schedule using (schedule_id) inner join user using (user_id)  where doctor_id='%s' "%(session['did'])
+# 	res=select(q)
+# 	data['tr']=res
+
+# 	if 'action' in request.args:
+# 		action=request.args['action']
+# 		id=request.args['id']
+		
+# 	else:
+# 		action=None
+
+# 	if action=="accept":
+# 		q="update booking set status='accept' where booking_id='%s'"%(id)
+# 		update(q)
+# 		flash('Appointment confirmed....!!')
+# 		return redirect(url_for('doctor.doctor_view_booking'))
+
+# 	if action=="reject":
+# 		q="update booking set status='reject'   where booking_id='%s'"%(id)
+# 		update(q)
+# 		flash('updated successfully')
+# 		return redirect(url_for('doctor.doctor_view_booking'))
+
+# 	return render_template('doctor_view_booking.html',data=data)
+
+# @doctor.route('/doctor_add_treatment', methods=['get', 'post'])
+# def doctor_add_treatment():
+#     data = {}
+#     booking_id = request.args['id']  # Get the correct booking_id from URL
+
+#     # Fetch existing treatments for display
+#     q = "SELECT * FROM treatment WHERE booking_id='%s'" % (booking_id)
+#     data['tr'] = select(q)
+
+#     if 'submit' in request.form:
+#         fname = request.form['fname']
+
+#         # Insert treatment linked to booking_id
+#         q = "INSERT INTO treatment VALUES (NULL, '%s', '%s', CURDATE())" % (fname, booking_id)
+#         insert(q)
+
+#         # Update booking status to 'treated'
+#         q_update = "UPDATE booking SET status='treated' WHERE booking_id='%s'" % (booking_id)
+#         update(q_update)
+
+#         return redirect(url_for('doctor.doctor_add_treatment', id=booking_id))
+
+#     if 'action' in request.args:
+#         action = request.args['action']
+#         treat_id = request.args['id']  # Use treatment_id instead of booking_id
+#     else:
+#         action = None
+
+#     if action == "delete":
+#         q = "DELETE FROM treatment WHERE treatment_id='%s'" % (treat_id)
+#         delete(q)
+#         return redirect(url_for('doctor.doctor_add_treatment', id=booking_id))
+
+#     return render_template("doctor_add_treatment.html", data=data)
+
 
 @doctor.route('/doctor_add_treatment',methods=['get','post'])
 def doctor_add_treatment():

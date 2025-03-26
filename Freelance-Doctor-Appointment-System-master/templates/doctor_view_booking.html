@@ -29,14 +29,12 @@
             <td>{{row['atime']}}</td>
 			<td>{{row['reason']}}</td>
 			<td>{{row['adate']}}</td>
-			{%if row['st']=="pending"%}
-			<td><a class="btn btn-outline-success" href="?action=accept&id={{row['booking_id']}}">accept</a></td>
-			<td><a class="btn btn-outline-danger" href="?action=reject&id={{row['booking_id']}}">reject</a></td>
-			{%else%}
-			<td><a class="btn btn-outline-info" href="doctor_add_treatment?id={{row['booking_id']}}">Add Treatment</a></td>
-			<td>{{row['st']}}</td>
-			{%endif%}
-	
+			<td>{{ row['st'] }}</td>
+			{% if row['st'] == "booked" %}
+    			<td><a class="btn btn-outline-info" href="doctor_add_treatment?id={{ row['booking_id'] }}">Add Treatment</a></td>
+			{% else %}
+    			<td></td> <!-- Empty cell for alignment -->
+			{% endif %}
 		</tr>
 		{%endfor%}
 	</table>

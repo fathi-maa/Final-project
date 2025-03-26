@@ -18,6 +18,15 @@
 			<td>{{row['treatment']}}</td>
 			<td>{{row['fname']}}</td>
 			<td>{{row['date']}}</td>
+			{%if row['b_st']=="booked"%}
+			<td><a class="btn btn-outline-success" href="user_make_payment?id={{row['booking_id']}}&amt={{row['fees']}}">Make payment</a></td>
+			{%elif row['b_st']=="paid"%}
+			<td><a href="viewinvoice?id={{row['booking_id']}}" class="btn btn-info">Bill</a></td>
+			{%else%}
+			<td>{{row['b_st']}}</td>
+			
+			{%endif%} 
+			
 		</tr>
 		{%endfor%}
 	</table>

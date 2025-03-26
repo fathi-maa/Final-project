@@ -53,3 +53,61 @@
 </center>
 <br><br><br>
 {%include 'footer.html'%}
+
+
+<!-- {%include 'user_header.html'%}
+ ======= Hero Section =======
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+         <div class="col-lg-6 d-flex flex-column justify-content-center"> 
+
+
+<center>
+	<form method="post">
+		
+		<table class="table" style="width:500px;">
+			<h1>Make Appoinment</h1>
+			<tr>
+				<th>Date</th>
+				<td><input type="text" value="{{data['date']}}" readonly="" name="date" required="" class="form-control"></td>
+			</tr>
+			<tr>
+				<th>Reason</th>
+				<td>
+					<textarea name="reason" required="" class="form-control"></textarea>
+				</td>
+			</tr>
+		</table>
+		<h3>Available Times</h3>
+		<table>
+			
+			<tr>
+				<th></th>
+				{% for i in data['s'] %}
+				<td>
+					{% if i in data['booked'] %}
+						<button type="button" class="btn btn-danger" disabled>{{ i }}</button>
+					{% else %}
+						<input type="submit" class="btn btn-outline-success" name="time" value="{{ i }}">
+					{% endif %}
+				</td>
+				{% endfor %}
+			</tr>
+			
+		</table>
+	</form>
+</center>
+</div>
+</div>
+</div></section>
+
+
+<center>
+	
+
+</center>
+<br><br><br>
+
+ -->
